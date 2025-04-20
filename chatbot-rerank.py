@@ -8,7 +8,7 @@ from langchain_community.vectorstores import FAISS
 
 
 # Read comments from the file
-file_path = "Reddit-cooking-tips-comments.txt"
+file_path = "cooking-tips-comments.txt"
 
 with open(file_path, "r", encoding="utf-8") as file:
     all_texts = file.readlines()
