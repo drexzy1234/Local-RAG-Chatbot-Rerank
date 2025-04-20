@@ -19,10 +19,10 @@ This version is trained on community-sourced cooking tips, but you can customize
 
 - Python 3.11+
 - [Ollama](https://ollama.com) installed and running
-- pull LLM model and Embedding model from Ollama to local (after pulling, update line 18 and 22 of the code accordingly)
-- [vLLM](https://docs.vllm.ai/en/latest/) installed and running
+- pull LLM model and Embedding model from Ollama to local (after pulling, update line 21 and 25 of the code accordingly)
+- [vLLM](https://docs.vllm.ai/en/latest/) installed and running (update line 31 after vLLM is setup)
 - install huggingface_hub
-- download the reranker model 'bge-reranker-v2-m3' from huggingface.co with huggingface-cli command
+- download the Rerank model 'bge-reranker-v2-m3' from huggingface.co with huggingface-cli command
 
 Install Python library dependencies:
 ```bash
