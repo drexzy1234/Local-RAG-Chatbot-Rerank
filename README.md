@@ -9,7 +9,7 @@ This version is trained on community-sourced cooking tips, but you can customize
 
 - Fully local RAG setup (no need for cloud api)
 - Uses Ollama-compatible models for both embedding and generation
-- Uses vLLM to support huggingface.co rerank model
+- Incorporate huggingface.co rerank model, run on vLLM
 - Built with Python, using LangChain and FAISS library
 - Utilized the power of embedding models and rerank models to enhance knowledge retrieval accuracy
 - Interactive terminal interface
