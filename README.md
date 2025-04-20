@@ -80,7 +80,7 @@ Type in what you want to ask when the prompt "Your question: " shows up.
 
 Example use of the code:
 ```bash
-<some-user-directory>:~$ python internal-rag-cookbot.py
+<some-user-directory>:~$ python chatbot-rerank.py
     Internal RAG Q&A Bot    
 Ask questions about cooking hacks and kitchen tips.
 This assistant is powered by a local language model and a custom knowledge base built from community-sourced cooking advice.
