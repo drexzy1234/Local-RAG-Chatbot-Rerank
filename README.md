@@ -57,7 +57,7 @@ This project uses Retrieval-Augmented Generation (RAG), which combines a embeddi
 
 - **top-k** is the number of top matching entries we retrieve from the embedding using a fast but rough similarity search. If the number k is too small, we might miss out on some relevant information; if it's too large, we're likely getting too much unrelated content. In the code provided we are using **"top-k 10"**, which is a good number compared to our data size. In the case for using a much larger knowledge base, a bigger k is prefered (some knowledge bases are so big that they use k = 100). 
 
-### Rerank API Endpoint
+### Rerank Top-K Content
 
 - These chunks are sent to a rerank API using 'bge-reranker-v2-m3' to reorder them by relevance.
 
