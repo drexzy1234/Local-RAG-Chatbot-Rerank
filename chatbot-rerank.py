@@ -28,7 +28,7 @@ llm = OllamaLLM(model="gemma3:12b", temperature=0.3)
 
 # rerank function, sends request to API endpoint
 def rerank_documents(query, docs):
-    url = "http://<some-address>:<some-port-number>/v1/rerank"
+    url = "http://<vllm-ip-address>:<port>/v1/rerank"
     headers = {
         'Authorization': 'Bearer 123456',
         'Content-Type': 'application/json'
